@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 使用自动装配的同时也可以使用<property>标签来装配属性 -->
+
+	<!-- beans 标签中可以配置 default-autowire="byName/byType/constructor/autodetect" 
+		表示这个 xml 中定义的 bean 采用配置的方式进行自动装配 ，配置了 beans 的 default-autowire 也可以再在 bean 
+		中配置 autowire，bean 中的配置会覆盖 beans 中的 -->
+
+	<!-- 根据名字自动装配，要设置 autowire="byName"，假设有一个要装配的属性是dog，再有一个 id 为 dog 的 bean。这个 id 为 dog 的 bean 就会被装配到 dog 属性中 -->
+	<bean id="createByName" autowire="byName" class="bimingliang.auto.CreateByName" />
+
+	<!-- 根据类型自动装配，要设置 autowire="byType"，问题是如果有多个 Bean 都匹配这个 Bean 的属性(比如 animal，dog，cat)，那么Spring会抛出异常 -->
+	<bean id="createByType" autowire="byType" class="bimingliang.auto.CreateByType" />
+
+	<!-- 指定了 autowire="byType" 装配，同时也可以混合使用 property 标签来装配，一定程度上 规避多个 Bean 都匹配问题 -->
+
+	<!-- 设置 autowire="constructor" 将通过构造函数自动装配 Bean，同 byType 一样，如果有多个 Bean 的类型都匹配抛出异常。
+	    如果一个类有多个构造函数都满足自动装配，会抛出异常。
+	    必须让 Spring 自动初始化所有的构造函数的参数，不能混合使用 constructor-arg 再次指定参数。
+		设置 autowire="autodetect"，会首先尝试通过 constructor 自动装配，没有匹配的再去尝试 byType 方式自动装配 -->
+	<bean id="createByConstructor" autowire="constructor" class="bimingliang.auto.CreateByConstructor" />
+
+	<!-- 设置 primary="true" 那么这个Bean在做类型自动匹配时候就比其他 Bean 优先(primary 默认是 true) -->
+	<bean id="animal" primary="false" class="bimingliang.auto.Dog" />
+	<bean id="dog" primary="true" class="bimingliang.auto.Dog" />
+	<bean id="cat" primary="false" class="bimingliang.auto.Cat" />
+	<!-- <bean id="yellowCat" primary="false" class="bimingliang.auto.YellowCat" /> -->
+	<!-- 设置 autowire-candidate="false" 那么这个 Bean 在做类型自动匹配时候就会被舍弃掉，不参与自动类型匹配 -->
+	<bean id="mouse" autowire-candidate="false" class="bimingliang.auto.Mouse" />
+
+</beans>

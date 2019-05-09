@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xmlns:context="http://www.springframework.org/schema/context"
+	     xmlns:jms="http://www.springframework.org/schema/jms"
+	     xmlns:amq="http://activemq.apache.org/schema/core"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/jms
+           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+           http://activemq.apache.org/schema/core
+           http://activemq.apache.org/schema/core/activemq-core-5.11.1.xsd">
+	
+	<context:annotation-config />
+	
+	<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean>
+	
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="test.jms" />
+	</bean>
+	
+	<bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="queue.name" />
+	</bean>
+	
+	<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="topic.name" />
+	</bean>
+	
+	<bean id="receiveMessageService" class="bimingliang.jms.ReceiveMessageService">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+	</bean>
+	
+	<bean id="sendMessageServiceImplement" class="bimingliang.jms.SendMessageServiceImplement">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+	</bean>
+	
+	<bean id="messageListener" class="bimingliang.jms.MessageListener" />
+	
+	<jms:listener-container connection-factory="connectionFactory">
+		<jms:listener destination="test.listener.jms" ref="messageListener" method="process"/>
+	</jms:listener-container>
+	
+	<!-- 
+		<amq:connectionFactory id="connectionFactory" brokerURL="tcp://localhost:61616"></amq:connectionFactory>
+		<amq:queue id="queue" physicalName="queue.name"></amq:queue>
+		<amq:topic id="topic" physicalName="topic.name"></amq:topic>
+	-->
+</beans>

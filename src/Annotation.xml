@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 默认情况注解方式是关闭的，需要加上 context:annotation-config 向 Spring说明使用注解的装配方式 -->
+	<context:annotation-config />
+
+	<bean id="actor" class="bimingliang.annotation.Actor" />
+	<bean id="myActress" class="bimingliang.annotation.Actress" />
+
+	<bean id="worker" class="bimingliang.annotation.Worker" />
+	<bean id="driver" class="bimingliang.annotation.Driver" />
+
+	<bean id="student" class="bimingliang.annotation.Student" />
+	<bean id="teacher" class="bimingliang.annotation.Teacher">
+		<qualifier value="selfMarkTeacher" />
+	</bean>
+	<bean id="schoolmaster" class="bimingliang.annotation.Schoolmaster" />
+
+	<bean id="autowiredProperties" class="bimingliang.annotation.AutowiredProperties" />
+	<bean id="autowiredConstructor" class="bimingliang.annotation.AutowiredConstructor" />
+	<bean id="autowiredQualifier" class="bimingliang.annotation.AutowiredQualifier" />
+	<bean id="injectProperties" class="bimingliang.annotation.InjectProperties" />
+
+    <!-- context:component-scan 扫描指定包及其子包，向 Spring 说明使用注解的装配方式 -->
+    <context:component-scan base-package="bimingliang.annotation.scan">
+        <!-- 如果没有标注 context:include-filter 那么就会去找匹配包中注释了 @Component，@Controller，@Repository，@Service 的类 -->
+        <!-- 指定属于 bimingliang.annotation.scan.Color 类型的都自动装配，默认名字是类名小写 -->
+        <!-- include-filter／exclude-filter 的 type 一共有五种类型：annotation assignable aspectj custom regex -->
+        <context:include-filter type="assignable" expression="bimingliang.annotation.scan.Color"/>
+        <!-- 指定属于 bimingliang.annotation.scan.detail.Blue 类型的都不去自动装配 -->
+        <context:exclude-filter type="assignable" expression="bimingliang.annotation.scan.detail.Blue"/>
+    </context:component-scan>
+
+    <!-- 基于 Java 配置 bean 要用 Configuration 注解标注类，告知 Spring 这个类可能返回多个配置 Bean -->
+    <context:component-scan base-package="bimingliang.annotation.java" />
+    <context:component-scan base-package="bimingliang.annotation.component" />
+</beans>

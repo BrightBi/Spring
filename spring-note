@@ -1,0 +1,29 @@
+1. Spring 通过依赖注入 面向切面 消除模版代码 等方式简化了代码
+2. Spring batch 可以了解下
+3. Spring 有 10 个命名空间：aop beans context jee jms lang mvc oxm tx util
+4. Spring bean 默认都是单例，可以通过配置 bean 的 scope 属性来调整
+5. SpEL 语言可以了解
+6. 四种类型的自动装配
+      byName：与 bean 的属性具有相同名字的 bean 装配进来，没有则不装配；
+      byType：与 bean 的属性具有相同类型的 bean 装配进来，没有则不装配；
+      constructor：与 bean 的构造器入参具有相同类型的 bean 装配进来；
+      autodetect：先尝试 constructor 如果失败，再尝试 byType；
+7. Spring 支持三种注解：Spring 自带的，JSR-330，JSR-250
+8. DI 有助于应用对象之间的解耦，AOP 有助于横切关注点与其影响的对象之间解耦
+9. Spring 的通知有五种类型：Before After After-returning After-Throwing Around
+10. 通知：切面要完成的功能，以及何时完成这个工作
+11. 连接点：可以应用切面的地方
+12. 切点：某个切面具体应用到的连接点
+13. 切面：要做的功能，何时做这个功能，以及切点的结合体
+14. 引入：将新功能或对象添加进来的过程
+15. 织入：将切面应用到目标对象来创建代理对象过程（织入时机：编译期 类加载期 运行期）
+16. Spring 提供四种 AOP 支持：基于代理的经典 AOP，@AspectJ 注解驱动的切面，纯 POJO 切面，注入式 AspectJ 切面
+17. Spring 的通知是 Java 编写的；Spring 是在运行期通知对象的；Spring 只支持方法连接点
+18. Spring 的数据持久化 Spring JDBC（基础） Spring + Hibernate／MyBatis／JPA 等
+19. 事务的 ADIC ：原子性（Atomic） 一致性（Consistent） 隔离性（Isolated） 持久性（Durable）
+20. 事务的方面：
+        传播行为：决定了事务启动还是挂起，或者方法是否许需要在事务环境中运行
+        隔离级别：处理脏读，不可重复读，幻读
+        是否只读：声明事务是否为只读事务，数据库会对只读事务进行特殊优化，只读事务只对具备启动一个新事务的传播行为有意义
+        事务超时：在指定时间内如果事务没有结束将强行回滚。只对具备启动一个新事务的传播行为有意义
+        回滚规则：一般在发生运行时异常会回滚，也可以自定义在什么情况下回滚或者不回滚事务

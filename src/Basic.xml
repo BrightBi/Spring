@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 通过默认构造函数构造对象 -->
+	<bean id="sonnet29" class="bimingliang.basic.Sonnet29" />
+
+
+	<!-- 通过带参数的构造函数构造对象 -->
+	<bean id="duke" class="bimingliang.basic.Juggler">
+		<constructor-arg value="15" />
+	</bean>
+
+	<!-- 通过带参数的构造函数构造对象 -->
+	<bean id="poeticJuggler"
+		class="bimingliang.basic.PoeticJuggler">
+		<constructor-arg value="15" />
+		<constructor-arg ref="sonnet29" />
+	</bean>
+
+	<bean id="person" class="bimingliang.basic.Student"></bean>
+    <bean id="student" class="bimingliang.basic.Student">
+        <!-- 通过 Student 的构造函数传参数,多个参数按顺序来,也可以通过 index 来设置参数顺序 -->
+        <constructor-arg index="1" value="15"></constructor-arg>
+        <constructor-arg index="0" value="student"></constructor-arg>
+        <constructor-arg ref="person"></constructor-arg>
+    </bean>
+
+	<!-- PoeticJuggler 没有无参构造函数，所以下面这种 bean 的定义是不对的 -->
+	<!-- <bean id="poeticJugglerError" class="bimingliang.basic.beans.PoeticJuggler" /> -->
+
+	<!-- 通过静态方法构造对象。Stage的构造方法是私有的，需要通过 getInstance 获取实例(将单例类配置成bean) -->
+	<bean id="stage" class="bimingliang.basic.singleton.Stage" factory-method="getInstance" />
+	<!-- 对于非静态单例   Stage的构造方法是私有的，需要配置factory-method="getInstance"，通过getInstance获取实例(将单例类配置成bean) -->
+    <bean id="singleton" class="bimingliang.basic.singleton.Singleton" />
+    <bean id="singletonStudent" factory-bean="singleton" factory-method="getStudent" />
+
+	<!-- scope="prototype"每次容器返回一个不同的对象；默认容器每次返回同一个对象，相当于单例。 可取值包括 singleton：只有一个实例（默认值）；prototype 
+		每次调用创建一个；request：每次 http 请求创建一个（web spring 中有效）； session：每个httpsession一个（web 
+		spring 中有效）；gloabal-session：全局个httpsession一个（Portlet中有效） -->
+	<!-- scope="singleton"，容器在初始化时候就会去创建对象。如果不想可以使用lazy-init="true"，在使用时候初始化 -->
+	<bean id="sonnet" class="bimingliang.basic.Sonnet" scope="prototype" />
+
+	<!-- init-method="turnOn" 在 Bean 初始化时候调用， destroy-method="turnOff" 在 Bean 
+		销毁时候调用 如果多个 bean 有相同的初始化和销毁方法可以在 beans 标签中使用 default-init-method="" default-destroy-method="" 
+		如果bean中没有这些指定的方法，那么什么都不会做 -->
+	<bean id="auditorium" init-method="turnOn" destroy-method="turnOff" class="bimingliang.basic.Auditorium" />
+
+	<bean id="saxophone" class="bimingliang.basic.Saxophone" />
+	<bean id="guitar" class="bimingliang.basic.Guitar" />
+
+	<!-- 使用 property 利用 setter 方法为类设置属性 -->
+	<bean id="instrumentalist"
+		class="bimingliang.basic.Instrumentalist">
+		<!-- 基本类型可以用 value="Jingle Bells" 直接设置 -->
+		<property name="song" value="Jingle Bells" />
+		<!-- 引用类型用 ref="saxophone" 如果多个bean 都配置的是ref="saxophone"，那他们都引用的是同一个 saxophone 
+			如果希望每个 instrumentalist 的 instrument 都是新创建的，可以使用内部 bean 方式 -->
+		<property name="instrument" ref="saxophone" />
+		<!-- 使用内部 bean 方式(对于构造函数，也同理可以使用内部bean) -->
+		<property name="instrumentInner">
+			<!-- 可以为内部 bean 指定 id 但是没有必要，内部 bean 不能被外部引用 -->
+			<bean class="bimingliang.basic.Saxophone" />
+		</property>
+	</bean>
+	
+	<!-- 使用 p 标签简化 property 配置（beans 标签中需要加入 xmlns:p="http://www.springframework.org/schema/p"） -->
+    <bean id="instrumentalistP" class="bimingliang.basic.Instrumentalist" p:song="Jingle Bells" p:instrument-ref="saxophone">
+        <property name="instrumentInner">
+            <bean class="bimingliang.basic.Saxophone" />
+        </property>
+    </bean>
+
+    <!-- 为 Collection Map 类型的属性赋值 -->
+    <bean id="oneManBand" class="bimingliang.basic.OneManBand">
+        <!-- 装配一个 null 值 -->
+        <property name="date"><null /></property>
+        <!-- <set> <list> 都可以为 Collection 类型的属性赋值，注意的是，如果用 <set> 为 List 赋值，需要保证 List 中元素唯一 -->
+        <property name="instrumentsCollection">
+            <list>
+                <ref bean="saxophone"/>
+                <ref bean="guitar"/>
+                <bean class="bimingliang.basic.Guitar" />
+            </list>
+        </property>
+        <property name="instrumentsList">
+            <list>
+                <ref bean="saxophone"/>
+                <ref bean="guitar"/>
+                <null />
+            </list>
+        </property>
+        <property name="objectList">
+            <list>
+                <value>Object List String</value>
+                <ref bean="guitar"/>
+                <bean class="bimingliang.basic.Guitar" />
+                <null />
+            </list>
+        </property>
+        <property name="instrumentsSet">
+            <set>
+                <ref bean="saxophone"/>
+                <ref bean="guitar"/>
+            </set>
+        </property>
+        <property name="instrumentsArray">
+            <list>
+                <ref bean="saxophone"/>
+                <ref bean="guitar"/>
+            </list>
+        </property>
+        <!-- 为 Map 类型注入赋值 -->
+        <property name="instrumentsMap">
+            <map>
+                <!-- 如果 key value 是 String 类型，可以直接使用 key="key" value="value" -->
+                <entry key-ref="sonnet" value-ref="saxophone" />
+                <entry value-ref="saxophone">
+                    <key>
+                        <bean class="bimingliang.basic.Sonnet">
+                            <property name="id" value="777" />
+                        </bean>
+                    </key>
+                </entry>
+            </map>
+        </property>
+        <!-- 为 Properties 类型注入赋值 -->
+        <property name="instrumentsProperties">
+            <props>
+                <prop key="k1">value1</prop>
+                <prop key="k2">value2</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="sonnetSpEL" class="bimingliang.basic.Sonnet" >
+        <property name="id" value="myid" />
+        <property name="number" value="#{7}" />
+    </bean>
+    <!-- SpEL 还有很多其他功能，感觉不实用，以后用到再细看 -->
+    <bean id="spEL" class="bimingliang.basic.SpEL">
+        <property name="number" value="#{7}" />
+        <property name="weight" value="#{7.7}" />
+        <property name="enable" value="#{true}" />
+        <property name="detail" value="#{'Weight is 7.7 and number is 7.'}" />
+        <!-- 为属性名为 sonnet 的属性注入对象，这个对象是 id 为 sonnet 的 bean。
+        等价于将 value="#{sonnet}" 替换成 ref="sonnet" -->
+        <property name="sonnet" value="#{sonnet}" />
+        <!-- sonnet.id 表示取 sonnet 中的 id 属性(调用了getId()) String 类型，所以可以在其上调用 String 的方法，比如 toUpperCase()。
+        防止 sonnet.id 为空可以使用 value="#{sonnet.id?.toUpperCase()}",?表示如果其前面的值为 null 那么不再继续做后面的调用-->
+        <property name="sonnetId" value="#{sonnet.id}" />
+        <property name="random" value="#{T(java.lang.Math).random()}" />
+        <property name="pi" value="#{T(java.lang.Math).PI}" />
+        <property name="basicOperation" value="#{sonnetSpEL.number + 10}" />
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="bimingliang.basic.editor.MyType">
+                    <bean class="bimingliang.basic.editor.MyEditor"></bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="property" class="bimingliang.basic.editor.Property">
+        <property name="myType" value="type,3"/>
+    </bean>
+</beans>

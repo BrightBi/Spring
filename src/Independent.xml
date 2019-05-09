@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xmlns:context="http://www.springframework.org/schema/context"
+	     xmlns:p="http://www.springframework.org/schema/p"
+	     xmlns:util="http://www.springframework.org/schema/util"
+	     xmlns:task="http://www.springframework.org/schema/task"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans
+	       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+           http://www.springframework.org/schema/task
+           http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+    <import resource="classpath:springUtil.xml"/>
+    <bean id="util" p:list-ref="list" p:set-ref="set" p:map-ref="map" class="bimingliang.independent.util.Util" />
+
+    <bean id="myListener" class="bimingliang.independent.event.MyListener"></bean>
+    <bean id="activeEvent" class="bimingliang.independent.event.ActiveEvent"></bean>
+
+    <!-- task:annotation-driven 向 Spring说明使用 @Scheduled 注解的方法将会被 Spring 调度 -->
+    <task:annotation-driven />
+    <bean id="springTask" class="bimingliang.independent.task.SpringTask" />
+    
+    <context:annotation-config />
+    <!-- QQ 邮箱为例，先到 设置-帐户 中打开 POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务，并获取授权码 -->
+    <!-- p:host ：代发邮件服务的域名，p:port ：端口，p:username：用户名，p:password：密码（对于 QQ 邮箱来说是授权码） -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" 
+        p:host="smtp.qq.com" p:port="587" p:username="826975475@qq.com" p:password="nwvvnvobdsldbaje" />
+    <bean id="springMail" class="bimingliang.independent.mail.SpringMail" />
+    
+    <context:component-scan base-package="bimingliang.independent.properties"/>
+    <!-- 此次引入properties文件，后面的bean就可以通过${}获取配置文件中的值 -->
+    <context:property-placeholder location="classpath:spring.properties" ignore-unresolvable="true" />
+    <bean id="properties" class="bimingliang.independent.properties.Properties" p:time="${time}" p:size="${size}" p:password="${password}" />
+
+    <!-- abstract="true"将relation定义为一个抽象Bean，不会被容器初始化为实例 -->
+    <bean id="relationParent" class="bimingliang.independent.relation.ForRelation" abstract="true" p:color="red" p:age="7"/>
+    <!-- relationFirst和relationSecond继承了relation -->
+    <bean id="relationFirst" class="bimingliang.independent.relation.ForRelation" p:color="green" parent="relationParent"/>
+    <bean id="relationSecond" class="bimingliang.independent.relation.ForRelation" p:age="9" parent="relationParent"/>
+
+    <bean id="init" class="bimingliang.independent.relation.Init"/>
+    <!-- depends-on="init"指定了relationDepend需要在init初始化完成以后才能初始化 -->
+    <bean id="relationDepend" class="bimingliang.independent.relation.ForRelation" depends-on="init">
+        <property name="color">
+            <!-- idref表示引用bean的id -->
+            <idref bean="init"/>
+        </property>
+        <property name="age" value="1" />
+    </bean>
+</beans>
