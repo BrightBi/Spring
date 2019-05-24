@@ -7,6 +7,7 @@ import bimingliang.annotation.AutowiredConstructor;
 import bimingliang.annotation.AutowiredProperties;
 import bimingliang.annotation.AutowiredQualifier;
 import bimingliang.annotation.InjectProperties;
+import bimingliang.annotation.component.MyComponentPrototype;
 import bimingliang.annotation.java.Air;
 import bimingliang.annotation.java.Water;
 import bimingliang.annotation.scan.Color;
@@ -53,6 +54,8 @@ public class Annotation03 {
 		Water water = (Water) ctx.getBean("selfName");
 		water.show();
 		System.out.println("************************* Component *************************");
+		MyComponentPrototype myComponentPrototype = (MyComponentPrototype) ctx.getBean("myComponentPrototype");
+		System.out.println("myComponentPrototype :" + myComponentPrototype.hashCode());
 
 		((ClassPathXmlApplicationContext)ctx).destroy();
 	}

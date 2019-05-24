@@ -44,8 +44,11 @@ public class Basic01 {
 
 		Stage stage = (Stage) ac.getBean("stage");
 		stage.doSomething();
-		Student singletonStudent = (Student) ac.getBean("singletonStudent");
-		singletonStudent.sayDetail();
+		Student singletonStudent1 = (Student) ac.getBean("singletonStudent");
+		singletonStudent1.sayDetail();
+		Student singletonStudent2 = (Student) ac.getBean("singletonStudent");
+		singletonStudent2.sayDetail();
+		System.out.println("singletonStudent1:" + singletonStudent1.hashCode() + " | singletonStudent2:" + singletonStudent2.hashCode());
 
 		Auditorium auditorium = (Auditorium) ac.getBean("auditorium");
 		auditorium.doSomething();

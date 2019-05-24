@@ -25,18 +25,17 @@
 	</bean>
 
 	<!-- 通过带参数的构造函数构造对象 -->
-	<bean id="poeticJuggler"
-		class="bimingliang.basic.PoeticJuggler">
+	<bean id="poeticJuggler" class="bimingliang.basic.PoeticJuggler">
 		<constructor-arg value="15" />
 		<constructor-arg ref="sonnet29" />
 	</bean>
 
-	<bean id="person" class="bimingliang.basic.Student"></bean>
+	<bean id="person" class="bimingliang.basic.Student" />
     <bean id="student" class="bimingliang.basic.Student">
         <!-- 通过 Student 的构造函数传参数,多个参数按顺序来,也可以通过 index 来设置参数顺序 -->
         <constructor-arg index="1" value="15"></constructor-arg>
         <constructor-arg index="0" value="student"></constructor-arg>
-        <constructor-arg ref="person"></constructor-arg>
+        <constructor-arg ref="person" />
     </bean>
 
 	<!-- PoeticJuggler 没有无参构造函数，所以下面这种 bean 的定义是不对的 -->
@@ -44,13 +43,13 @@
 
 	<!-- 通过静态方法构造对象。Stage的构造方法是私有的，需要通过 getInstance 获取实例(将单例类配置成bean) -->
 	<bean id="stage" class="bimingliang.basic.singleton.Stage" factory-method="getInstance" />
-	<!-- 对于非静态单例   Stage的构造方法是私有的，需要配置factory-method="getInstance"，通过getInstance获取实例(将单例类配置成bean) -->
+	<!-- 对于非静态单例 Stage 的构造方法是私有的，需要配置factory-method="getInstance"，通过getInstance获取实例(将单例类配置成bean) -->
     <bean id="singleton" class="bimingliang.basic.singleton.Singleton" />
     <bean id="singletonStudent" factory-bean="singleton" factory-method="getStudent" />
 
 	<!-- scope="prototype"每次容器返回一个不同的对象；默认容器每次返回同一个对象，相当于单例。 可取值包括 singleton：只有一个实例（默认值）；prototype 
 		每次调用创建一个；request：每次 http 请求创建一个（web spring 中有效）； session：每个httpsession一个（web 
-		spring 中有效）；gloabal-session：全局个httpsession一个（Portlet中有效） -->
+		spring 中有效）；gloabal-session：全局个 httpsession 一个（Portlet 中有效） -->
 	<!-- scope="singleton"，容器在初始化时候就会去创建对象。如果不想可以使用lazy-init="true"，在使用时候初始化 -->
 	<bean id="sonnet" class="bimingliang.basic.Sonnet" scope="prototype" />
 
@@ -63,8 +62,7 @@
 	<bean id="guitar" class="bimingliang.basic.Guitar" />
 
 	<!-- 使用 property 利用 setter 方法为类设置属性 -->
-	<bean id="instrumentalist"
-		class="bimingliang.basic.Instrumentalist">
+	<bean id="instrumentalist" class="bimingliang.basic.Instrumentalist">
 		<!-- 基本类型可以用 value="Jingle Bells" 直接设置 -->
 		<property name="song" value="Jingle Bells" />
 		<!-- 引用类型用 ref="saxophone" 如果多个bean 都配置的是ref="saxophone"，那他们都引用的是同一个 saxophone 
@@ -171,12 +169,12 @@
         <property name="customEditors">
             <map>
                 <entry key="bimingliang.basic.editor.MyType">
-                    <bean class="bimingliang.basic.editor.MyEditor"></bean>
+                    <bean class="bimingliang.basic.editor.MyEditor" />
                 </entry>
             </map>
         </property>
     </bean>
     <bean id="property" class="bimingliang.basic.editor.Property">
-        <property name="myType" value="type,3"/>
+        <property name="myType" value="type,3" />
     </bean>
 </beans>
