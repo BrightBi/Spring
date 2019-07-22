@@ -17,13 +17,15 @@ public class AutowiredConstructor {
 
 	private Performer actress;
 
+	// 此处如果将 构造函数的最后一个入参名字改成与 xml 中配置的 id="myActress" 不一样，比如 actress
+	// 此时会认为这个构造函数没有匹配上，从而使用了下面那个具有三个参数的构造函数。
 	@Autowired(required=false)
-	public AutowiredConstructor(Worker worker, Driver driver, Performer actor, Performer actress) {
+	public AutowiredConstructor(Worker worker, Driver driver, Performer actor, Performer myActress) {
 		super();
 		this.worker = worker;
 		this.driver = driver;
 		this.actor = actor;
-		this.actress = actress;
+		this.actress = myActress;
 	}
 
 	@Autowired(required=false)
@@ -34,7 +36,6 @@ public class AutowiredConstructor {
 		this.actor = actor;
 	}
 
-	@Autowired(required=false)
 	public AutowiredConstructor(Worker worker, Performer actor) {
 		super();
 		this.worker = worker;

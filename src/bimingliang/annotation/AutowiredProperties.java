@@ -17,16 +17,15 @@ public class AutowiredProperties {
 
 	private Driver driver;
 
-	// 直接在这里注释@Autowired，都可以不用set方法。
-	// Autowired 默认是通过 byType 方式装配，此处的 Performer 类型在 xml
-	// 配置文件里面有两个（actor，actress）能匹配上
-	// 理论上这时候会报错，但实际上并没有。如果把 xml 配置文件中的 id 为 actor 的 bean 改下，id 改成 跟当前属性不同名，
+	// 直接在这里注释 @Autowired，都可以不用 set 方法。
+	// Autowired 默认是通过 byType 方式装配，此处的 Performer 类型在 xml 配置文件里面有两个（actor，actress）能匹配上
+	// 理论上这时候会报错，但实际上并没有。如果把 xml 配置文件中的 id 为 actor 的 bean 改下，id 改成跟当前属性不同名，
 	// 此时就报错。猜测，先 byName 方式装配，如果没有成功再 byType；或者多个类型匹配，会选取属性名跟 id 相同那个，没有相同的就会报错
 	@Autowired
 	private Performer actor;
 
-	// 直接在这里注释@Autowired，都可以不用set方法。
-	// @Qualifier("myActress")表示用 id 为 myActress 的 Bean 来装配(用来解决匹配到多个类型相同的)
+	// 直接在这里注释 @Autowired，都可以不用set方法。
+	// @Qualifier("myActress") 表示用 id 为 myActress 的 Bean 来装配(用来解决匹配到多个类型相同的)
 	@Autowired
 	@Qualifier("myActress")
 	private Performer actress;
@@ -62,7 +61,7 @@ public class AutowiredProperties {
 		return worker;
 	}
 
-	// 直接在这里注释@Autowired，会自动调用这个方法装配worker。
+	// 直接在这里注释 @Autowired，会自动调用这个方法装配 worker。
 	@Autowired
 	public void setWorker(Worker worker) {
 		this.worker = worker;
@@ -72,7 +71,7 @@ public class AutowiredProperties {
 		return driver;
 	}
 
-	// 直接在这里注释@Autowired，会自动调用这个方法装配driver，
+	// 直接在这里注释 @Autowired，会自动调用这个方法装配 driver，
 	// 方法名字可以自命名，不一定非要 set 方法才能注释成 Autowired
 	@Autowired
 	public void setMyDriver(Driver driver) {

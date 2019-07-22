@@ -38,8 +38,8 @@
 	<bean id="animal" primary="false" class="bimingliang.auto.Dog" />
 	<bean id="dog" primary="true" class="bimingliang.auto.Dog" />
 	<bean id="cat" primary="false" class="bimingliang.auto.Cat" />
-	<!-- <bean id="yellowCat" primary="false" class="bimingliang.auto.YellowCat" /> -->
 	<!-- 设置 autowire-candidate="false" 那么这个 Bean 在做类型自动匹配时候就会被舍弃掉，不参与自动类型匹配 -->
+	<bean id="yellowCat" autowire-candidate="false" class="bimingliang.auto.YellowCat" />
 	<bean id="mouse" autowire-candidate="false" class="bimingliang.auto.Mouse" />
 
 </beans>
