@@ -14,13 +14,13 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
-	<bean id="bird" class="bimingliang.aop.Bird"></bean>
-	<bean id="car" class="bimingliang.aop.Car"></bean>
-	<bean id="forExtend" class="bimingliang.aop.ForExtendImplement"></bean>
+	<bean id="bird" class="bimingliang.aop.Bird" />
+	<bean id="car" class="bimingliang.aop.Car" />
+	<bean id="forExtend" class="bimingliang.aop.ForExtendImplement" />
 	
-	<bean id="biMingliang" class="bimingliang.aop.BiMingliang"></bean>
-	<bean id="extendImplement" class="bimingliang.aop.ExtendImplement"></bean>
-	<bean id="baseImplement" class="bimingliang.aop.BaseImplement"></bean>
+	<bean id="biMingliang" class="bimingliang.aop.BiMingliang" />
+	<bean id="extendImplement" class="bimingliang.aop.ExtendImplement" />
+	<bean id="baseImplement" class="bimingliang.aop.BaseImplement" />
 	<aop:config>
 		<aop:aspect ref="biMingliang">
 			<!-- bimingliang.aop.Car.start(..) 方法执行之前调用biMingliang的up()方法。

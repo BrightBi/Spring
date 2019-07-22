@@ -1,6 +1,7 @@
 package test;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import bimingliang.basic.Auditorium;
@@ -23,10 +24,17 @@ public class Basic01 {
 		 *  ApplicationContext ac = new ClassPathXmlApplicationContext("Basic.xml "); 
 		 *  FileSystemXmlApplicationContext 即系统文件路径，文件的目录(Eclipse中的项目根路径)。 
 		 *  ApplicationContext ac = new FileSystemXmlApplicationContext("E:\\MyWorkspace\\Spring\\src\\Basic.xml");
+		 *  AnnotationConfigApplicationContext 从 Java 类中，根据 Bean 注解来加载
+		 *  ApplicationContext ac = new AnnotationConfigApplicationContext(bimingliang.annotation.java.CreateBeans);
 		 */
 		// ApplicationContext ac = new FileSystemXmlApplicationContext("E:\\MyWorkspace\\Spring\\src\\Basic.xml");
+		ApplicationContext acAnnotation = new AnnotationConfigApplicationContext(bimingliang.annotation.java.CreateBeans.class);
+		String[] beansNameAnnotation = acAnnotation.getBeanDefinitionNames();
+		for (String name : beansNameAnnotation) {
+			System.out.println(name);
+		}
+		System.out.println("**************************************************");
 		ApplicationContext ac = new ClassPathXmlApplicationContext("Basic.xml");
-		
 		String[] beansName = ac.getBeanDefinitionNames();
 		for (String name : beansName) {
 			System.out.println(name);
@@ -73,6 +81,7 @@ public class Basic01 {
 		
 		Property property = (Property) ac.getBean("property");
 		property.detail();
+
 	}
 
 }
