@@ -41,20 +41,20 @@
 	<!-- PoeticJuggler 没有无参构造函数，所以下面这种 bean 的定义是不对的 -->
 	<!-- <bean id="poeticJugglerError" class="bimingliang.basic.beans.PoeticJuggler" /> -->
 
-	<!-- 通过静态方法构造对象。Stage的构造方法是私有的，需要通过 getInstance 获取实例(将单例类配置成bean) -->
+	<!-- 通过静态方法构造对象。Stage 的构造方法是私有的，需要通过 getInstance 获取实例(将单例类配置成bean) -->
 	<bean id="stage" class="bimingliang.basic.singleton.Stage" factory-method="getInstance" />
-	<!-- 对于非静态单例 Stage 的构造方法是私有的，需要配置factory-method="getInstance"，通过getInstance获取实例(将单例类配置成bean) -->
+	<!-- 对于非静态 Singleton 的构造方法是私有的，要配置 factory-bean="singleton" factory-method="getStudent"，通过 getStudent 获取实例 -->
     <bean id="singleton" class="bimingliang.basic.singleton.Singleton" />
     <bean id="singletonStudent" factory-bean="singleton" factory-method="getStudent" />
 
-	<!-- scope="prototype"每次容器返回一个不同的对象；默认容器每次返回同一个对象，相当于单例。 可取值包括 singleton：只有一个实例（默认值）；prototype 
-		每次调用创建一个；request：每次 http 请求创建一个（web spring 中有效）； session：每个httpsession一个（web 
-		spring 中有效）；gloabal-session：全局个 httpsession 一个（Portlet 中有效） -->
-	<!-- scope="singleton"，容器在初始化时候就会去创建对象。如果不想可以使用lazy-init="true"，在使用时候初始化 -->
+	<!-- scope="prototype"每次容器返回一个不同的对象；默认容器每次返回同一个对象，相当于单例。可取值包括：
+	    singleton：只有一个实例（默认值）；prototype：每次调用创建一个；request：每次 http 请求创建一个（web spring 中有效）；
+	    session：每个httpsession一个（web spring 中有效）；gloabal-session：全局个 httpsession 一个（Portlet 中有效） -->
+	<!-- scope="singleton"，容器在初始化时候就会去创建对象。也可以使用lazy-init="true"，在使用时候初始化 -->
 	<bean id="sonnet" class="bimingliang.basic.Sonnet" scope="prototype" />
 
-	<!-- init-method="turnOn" 在 Bean 初始化时候调用， destroy-method="turnOff" 在 Bean 
-		销毁时候调用 如果多个 bean 有相同的初始化和销毁方法可以在 beans 标签中使用 default-init-method="" default-destroy-method="" 
+	<!-- init-method="turnOn" 在 Bean 初始化时候调用， destroy-method="turnOff" 在 Bean 销毁时候调用
+	    如果多个 bean 有相同的初始化和销毁方法可以在 beans 标签中使用 default-init-method="" default-destroy-method="" 
 		如果bean中没有这些指定的方法，那么什么都不会做 -->
 	<bean id="auditorium" init-method="turnOn" destroy-method="turnOff" class="bimingliang.basic.Auditorium" />
 

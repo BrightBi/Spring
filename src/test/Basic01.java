@@ -56,7 +56,7 @@ public class Basic01 {
 		singletonStudent1.sayDetail();
 		Student singletonStudent2 = (Student) ac.getBean("singletonStudent");
 		singletonStudent2.sayDetail();
-		System.out.println("singletonStudent1:" + singletonStudent1.hashCode() + " | singletonStudent2:" + singletonStudent2.hashCode());
+		System.out.println("singletonStudent1 == singletonStudent2:" + (singletonStudent1 == singletonStudent2));
 
 		Auditorium auditorium = (Auditorium) ac.getBean("auditorium");
 		auditorium.doSomething();
@@ -65,8 +65,8 @@ public class Basic01 {
 		Sonnet sonnet2 = (Sonnet) ac.getBean("sonnet");
 		Juggler duke1 = (Juggler) ac.getBean("duke");
 		Juggler duke2 = (Juggler) ac.getBean("duke");
-		System.out.println("sonnet1:" + sonnet1.hashCode() + " | sonnet2:" + sonnet2.hashCode());
-		System.out.println("duke1:" + duke1.hashCode() + " | duke2:" + duke2.hashCode());
+		System.out.println("sonnet1 == sonnet2:" + (sonnet1 == sonnet2));
+		System.out.println("duke1 == duke2:" + (duke1 == duke2));
 
 		Instrumentalist instrumentalist = (Instrumentalist) ac.getBean("instrumentalist");
 		instrumentalist.perform();
@@ -82,6 +82,6 @@ public class Basic01 {
 		Property property = (Property) ac.getBean("property");
 		property.detail();
 
+		((ClassPathXmlApplicationContext)ac).destroy();
 	}
-
 }
