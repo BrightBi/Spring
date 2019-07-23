@@ -38,9 +38,9 @@
         p:host="smtp.qq.com" p:port="587" p:username="826975475@qq.com" p:password="nwvvnvobdsldbaje" />
     <bean id="springMail" class="bimingliang.independent.mail.SpringMail" />
     
-    <context:component-scan base-package="bimingliang.independent.properties"/>
-    <!-- 此次引入properties文件，后面的bean就可以通过${}获取配置文件中的值 -->
+    <!-- 此处引入properties文件，后面的bean就可以通过${}获取配置文件中的值 -->
     <context:property-placeholder location="classpath:spring.properties" ignore-unresolvable="true" />
+    <context:component-scan base-package="bimingliang.independent.properties"/>
     <bean id="properties" class="bimingliang.independent.properties.Properties" p:time="${time}" p:size="${size}" p:password="${password}" />
 
     <!-- abstract="true"将relation定义为一个抽象Bean，不会被容器初始化为实例 -->
