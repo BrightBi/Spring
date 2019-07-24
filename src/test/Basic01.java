@@ -26,6 +26,7 @@ public class Basic01 {
 		 *  ApplicationContext ac = new FileSystemXmlApplicationContext("E:\\MyWorkspace\\Spring\\src\\Basic.xml");
 		 *  AnnotationConfigApplicationContext 从 Java 类中，根据 Bean 注解来加载
 		 *  ApplicationContext ac = new AnnotationConfigApplicationContext(bimingliang.annotation.java.CreateBeans);
+		 *  XmlWebApplicationContext 从 Web 应用下的 xml 配置文件加载（Spring Web 会用到）
 		 */
 		// ApplicationContext ac = new FileSystemXmlApplicationContext("E:\\MyWorkspace\\Spring\\src\\Basic.xml");
 		ApplicationContext acAnnotation = new AnnotationConfigApplicationContext(bimingliang.annotation.java.CreateBeans.class);
