@@ -2,6 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
@@ -25,6 +26,12 @@
 	</bean>
 
 	<!-- 通过带参数的构造函数构造对象 -->
+	<!-- 也可以使用 Spring 的 c 标签简化书写，需要添加 xmlns:c="http://www.springframework.org/schema/c" -->
+	<!-- c:构造函数参数名-ref=值/bean引用
+	    <bean id="poeticJuggler" c:beanBags="29" c:poem-ref="sonnet29" class="bimingliang.basic.PoeticJuggler" />
+	    c:_构造函数参数顺序位置-ref=值/bean引用
+	    <bean id="poeticJuggler" c:_0="29" c:_1-ref="sonnet29" class="bimingliang.basic.PoeticJuggler" />
+    -->
 	<bean id="poeticJuggler" class="bimingliang.basic.PoeticJuggler">
 		<constructor-arg value="15" />
 		<constructor-arg ref="sonnet29" />
