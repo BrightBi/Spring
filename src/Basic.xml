@@ -31,6 +31,20 @@
 	    <bean id="poeticJuggler" c:beanBags="29" c:poem-ref="sonnet29" class="bimingliang.basic.PoeticJuggler" />
 	    c:_构造函数参数顺序位置-ref=值/bean引用
 	    <bean id="poeticJuggler" c:_0="29" c:_1-ref="sonnet29" class="bimingliang.basic.PoeticJuggler" />
+
+	    如果构造函数是集合类型，可以类似下面这种装配
+        <constructor-arg>
+            <list>
+                <ref bean="saxophone"/>
+                <ref bean="guitar"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>v1</value>
+                <value>v2</value>
+            </list>
+        </constructor-arg>
     -->
 	<bean id="poeticJuggler" class="bimingliang.basic.PoeticJuggler">
 		<constructor-arg value="15" />
