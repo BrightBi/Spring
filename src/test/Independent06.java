@@ -31,7 +31,8 @@ public class Independent06 {
 		
 		System.out.println("************************* Mail *************************");
 		SpringMail springMail = (SpringMail) ctx.getBean("springMail");
-		springMail.sendSimpleMail();
+		System.out.println(springMail.hashCode());
+		// springMail.sendSimpleMail();
 		// springMail.sendMimeMail();
 		// springMail.sendHtmlMail();
 		

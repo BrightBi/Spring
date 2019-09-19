@@ -25,9 +25,7 @@ public class BiMingliang {
 	}
 	
 	/*
-	 *  环绕通知
-	 *  一定要调用 proceedingJoinPoint.proceed(); 否则程序会到此为止，
-	 *  不再继续向下调用。
+	 *  环绕通知一定要调用 proceedingJoinPoint.proceed(); 否则程序会到此为止，不再继续向下调用。
 	 */
 	public void watch(ProceedingJoinPoint proceedingJoinPoint) {
 		try {
