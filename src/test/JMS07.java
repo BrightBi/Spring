@@ -6,15 +6,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import bimingliang.jms.ReceiveMessageService;
 import bimingliang.jms.SendMessageServiceImplement;
 
-public class TestJMS {
+public class JMS07 {
 
 	public static void main(String[] args) {
 		normalJMS();
-		//listenerJMS();
+		// listenerJMS();
 	}
 	
 	public static void listenerJMS() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContextJMS.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("JMS.xml");
 
 		String[] beansName = ctx.getBeanDefinitionNames();
 		for (String name : beansName) {
@@ -31,7 +31,7 @@ public class TestJMS {
 	}
 	
 	public static void normalJMS() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContextJMS.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("JMS.xml");
 
 		String[] beansName = ctx.getBeanDefinitionNames();
 		for (String name : beansName) {
