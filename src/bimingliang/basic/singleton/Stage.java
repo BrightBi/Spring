@@ -14,6 +14,6 @@ public class Stage {
 	}
 	
 	public void doSomething () {
-		System.out.println("Stage doSomething");
+		System.out.println("Stage doSomething:" + this.hashCode());
 	}
 }

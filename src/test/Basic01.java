@@ -22,7 +22,7 @@ public class Basic01 {
 		/*
 		 *  ClassPathXmlApplicationContext 是读取 src 目录下的配置文件 
 		 *  ApplicationContext ac = new ClassPathXmlApplicationContext("Basic.xml "); 
-		 *  FileSystemXmlApplicationContext 即系统文件路径，文件的目录(Eclipse中的项目根路径)。 
+		 *  FileSystemXmlApplicationContext 即系统文件路径。 
 		 *  ApplicationContext ac = new FileSystemXmlApplicationContext("E:\\MyWorkspace\\Spring\\src\\Basic.xml");
 		 *  AnnotationConfigApplicationContext 从 Java 类中，根据 Bean 注解来加载
 		 *  ApplicationContext ac = new AnnotationConfigApplicationContext(bimingliang.annotation.java.CreateBeans);
@@ -51,8 +51,10 @@ public class Basic01 {
 		Student student = (Student) ac.getBean("student");
 		student.sayDetail();
 
-		Stage stage = (Stage) ac.getBean("stage");
-		stage.doSomething();
+		Stage stageOne = (Stage) ac.getBean("stage");
+		stageOne.doSomething();
+		Stage stageTwo = (Stage) ac.getBean("stage");
+		stageTwo.doSomething();
 		Student singletonStudent1 = (Student) ac.getBean("singletonStudent");
 		singletonStudent1.sayDetail();
 		Student singletonStudent2 = (Student) ac.getBean("singletonStudent");
