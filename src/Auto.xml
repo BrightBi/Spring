@@ -16,14 +16,13 @@
 
 	<!-- 使用自动装配的同时也可以使用<property>标签来装配属性 -->
 
-	<!-- beans 标签中可以配置 default-autowire="byName/byType/constructor/autodetect" 
-		表示这个 xml 中定义的 bean 采用配置的方式进行自动装配 ，配置了 beans 的 default-autowire 也可以再在 bean 
-		中配置 autowire，bean 中的配置会覆盖 beans 中的 -->
+	<!-- beans 标签中可以配置 default-autowire="byName/byType/constructor/autodetect"，表示这个 xml 中定义的 bean 采用配置的方式进行自动装配，
+	    配置了 beans 的 default-autowire 也可以再在 bean 中配置 autowire，bean 中的配置会覆盖 beans 中的 -->
 
-	<!-- 根据名字自动装配，要设置 autowire="byName"，假设有一个要装配的属性是dog，再有一个 id 为 dog 的 bean。这个 id 为 dog 的 bean 就会被装配到 dog 属性中 -->
+	<!-- 根据名字自动装配，设置 autowire="byName"，假设有一个要装配的属性是dog，再有一个 id 为 dog 的 bean。这个 id 为 dog 的 bean 就会被装配到 dog 属性中 -->
 	<bean id="createByName" autowire="byName" class="bimingliang.auto.CreateByName" />
 
-	<!-- 根据类型自动装配，要设置 autowire="byType"，问题是如果有多个 Bean 都匹配这个 Bean 的属性(比如 animal，dog，cat)，那么Spring会抛出异常 -->
+	<!-- 根据类型自动装配，设置 autowire="byType"，问题是如果有多个 Bean 都匹配这个 Bean 的属性(比如 animal，dog，cat)，那么Spring会抛出异常 -->
 	<bean id="createByType" autowire="byType" class="bimingliang.auto.CreateByType" />
 
 	<!-- 指定了 autowire="byType" 装配，同时也可以混合使用 property 标签来装配，一定程度上 规避多个 Bean 都匹配问题 -->

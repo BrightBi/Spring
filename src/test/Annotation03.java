@@ -8,6 +8,7 @@ import bimingliang.annotation.AutowiredProperties;
 import bimingliang.annotation.AutowiredQualifier;
 import bimingliang.annotation.InjectProperties;
 import bimingliang.annotation.component.MyComponentPrototype;
+import bimingliang.annotation.component.MyComponentSingleton;
 import bimingliang.annotation.java.Air;
 import bimingliang.annotation.java.Water;
 import bimingliang.annotation.scan.Color;
@@ -54,8 +55,16 @@ public class Annotation03 {
 		Water water = (Water) ctx.getBean("selfName");
 		water.show();
 		System.out.println("************************* Component *************************");
-		MyComponentPrototype myComponentPrototype = (MyComponentPrototype) ctx.getBean("myComponentPrototype");
-		System.out.println("myComponentPrototype :" + myComponentPrototype.hashCode());
+		MyComponentPrototype myComponentPrototype1 = (MyComponentPrototype) ctx.getBean("myComponentPrototype");
+		MyComponentPrototype myComponentPrototype2 = (MyComponentPrototype) ctx.getBean("myComponentPrototype");
+		System.out.println("myComponentPrototype1 :" + myComponentPrototype1.hashCode());
+		System.out.println("myComponentPrototype2 :" + myComponentPrototype2.hashCode());
+		
+		System.out.println("************************* Component *************************");
+		MyComponentSingleton selfComponentName1 = (MyComponentSingleton) ctx.getBean("selfComponentName");
+		MyComponentSingleton selfComponentName2 = (MyComponentSingleton) ctx.getBean("selfComponentName");
+		System.out.println("selfComponentName1 :" + selfComponentName1.hashCode());
+		System.out.println("selfComponentName2 :" + selfComponentName2.hashCode());
 
 		((ClassPathXmlApplicationContext)ctx).destroy();
 	}
